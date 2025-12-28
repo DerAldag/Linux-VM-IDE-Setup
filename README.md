@@ -27,19 +27,6 @@ Aufgaben der Ubuntu Server VM:
 - Robust durch tmux Session
 - Entwicklung/Code-Editing über VS Code Remote-SSH
 
-### Struktur (vereinfacht)
-
-Windows (VS Code)
-     │
-     │ SSH
-     ▼
-Ubuntu Server VM
-     │
-     ├─ tmux
-     ├─ Git
-     ├─ Python venv
-     └─ Projekte
-
 ## Motivation & Designentscheidungen
 
 
