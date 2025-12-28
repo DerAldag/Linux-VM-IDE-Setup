@@ -69,7 +69,8 @@ Die Virtualisierung erlaubt eine klare Isolation der Arbeits-/Codingumgebung: Pr
 - Passwort-Login deaktiviert
 - Key liegt auf dem Windows Host
 - Authentifizierung erfolgt über SSH-Schlüssel
-
+- Agent-Forwarding für reibungsloses Arbeiten
+  
 Der private SSH-Schlüssel liegt auf dem Windows Host,
 der öffentliche Schlüssel ist im `authorized_keys`-File des Linux-Users
 hinterlegt.
@@ -158,3 +159,10 @@ Lösung:
 - Neuinstallation von VS Code unter "C:\"
 - Erzwungene Verwendung der ssh-config unter "C:\"
 
+### Ständiges Abfragen der SSH Passphrase bei git und VS Code Remote trotz Agent-Forwarding
+
+Ursache:
+- Auf der VM und in Github waren ein altes Schlüssel Paar hinterlegt
+
+Lösung:
+- Backup der VM-Schlüssel, dann Löschen. Host Schlüssel bei Github eingetragen.
