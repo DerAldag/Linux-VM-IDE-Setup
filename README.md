@@ -32,8 +32,8 @@ Aufgaben der Ubuntu Server VM:
 
 ### Warum Ubuntu in einer VM statt Dual Boot
 - Kein Neustart nötig,  Ubuntu Server ohne GUI startet sehr schnell
-- Interessantere Integrationsmöglichkeiten, wie Anbindung per SSH
-- Trennung von Arbeits- und Freizeitumgebung
+- Interessantere Integrationsmöglichkeiten, wie Anbindung per SSH vom Windwos Host
+- Technisch saubere Trennung von Arbeits- und Freizeitumgebung, aber nahtloser Übergang zwischen beidem
 
 ### Warum Ubuntu Server
 - Minimaler Ressourcenverbrauch für lagfreies Arbeiten
