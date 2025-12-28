@@ -152,12 +152,14 @@ systemctl enable --now backup-vm.timer
 
 ### VS Code Remote-SSH hing bei "Setting up SSH host"
 Ursache:
+- SSH-Agent auf Manuell gestellt, war bei jedem Start gestoppt
 - Verwendung eines shell-skript brechenden Nutzernamen: Beinhaltet ". " (Punkt und Leerzeichen)
 - Inkonsistente VS Code Installation
 
 Lösung:
 - Neuinstallation von VS Code unter "C:\"
 - Erzwungene Verwendung der ssh-config unter "C:\"
+- SH-Agent auf automatisch gestellt
 
 ### Ständiges Abfragen der SSH Passphrase bei git und VS Code Remote trotz Agent-Forwarding
 
