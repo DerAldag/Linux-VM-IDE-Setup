@@ -1,5 +1,7 @@
 # Konzept und Use-Case Überlegungen
 
+Skript/Service für Automatisches Monitoring von Diskspace und Durchschnittslast, Warnung bei Überschreitungen, einfache logs
+
 Für Diskspace mountlogik verwenden. Damit ließe sich das Skript theoretisch auch auf einer neuen Maschine einfach einbauen.
 / = Für die Überwachung relevantes Wurzelverzeichnis
 Unter 80 % = OK, über 80 = Warnung, über 90% = Kritisch -Disk läuft meist monoton, daher keiner wiederholten Warnungen, Zustandswechsel sind Aussagekräftig
