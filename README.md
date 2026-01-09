@@ -14,7 +14,7 @@ Dieses Repository dokumentiert ein selbst entworfenes Entwicklungs-Setup, um erw
 
 ## Ziel des Setups
 
-Ziel des Setups ist es, eine stabile, bequem erreichbare Linux Arbeitsumgebung für Softwareentwicklung bereitszustellen, während Windows ausschließlich als GUI-Host verwendet wird. Dadurch können Coding-Tutorials und Entwicklungsworkflows einheitlich in einer Linux-Umbegung durchgeführt werden, ohne die gewohnte Windows-Oberfläche, Shortcuts oder Freizeitnutzung aufzugeben.
+Ziel des Setups ist es, eine stabile, bequem erreichbare Linux Arbeitsumgebung für Softwareentwicklung bereitzustellen, während Windows ausschließlich als GUI-Host verwendet wird. Dadurch können Coding-Tutorials und Entwicklungsworkflows einheitlich in einer Linux-Umgebung durchgeführt werden, ohne die gewohnte Windows-Oberfläche, Shortcuts oder Freizeitnutzung aufzugeben.
 
 Aufgaben der Windows Maschine in diesem Setup
 
@@ -40,22 +40,25 @@ Aufgaben der Ubuntu Server VM:
 ## Motivation & Designentscheidungen
 
 ### Warum Ubuntu in einer VM statt Dual Boot
+
 - Kein Neustart nötig,  Ubuntu Server ohne GUI startet sehr schnell
-- Interessantere Integrationsmöglichkeiten, wie Anbindung per SSH vom Windwos Host
+- Interessantere Integrationsmöglichkeiten, wie Anbindung per SSH vom Windows Host
 - Technisch saubere Trennung von Arbeits- und Freizeitumgebung, aber nahtloser Übergang zwischen beidem
 
 ### Warum Ubuntu Server
+
 - Minimaler Ressourcenverbrauch für lagfreies Arbeiten
 - Größerer Lerneffekt durch Verzicht auf GUI, Arbeit am Terminal erzwungen
 - Keine GUI Abhängigkeit
 
 ### Warum tmux?
+
 - Sitzungen bleiben bei SSH Abbrüchen erhalten
 - Bei Bedarf weitere Funktionen, wie panes
 
 ## Technik
 
-Dieser Abschnitt beschreibt konkret die eingesetzten technischen Komponenten sowie deren Integration miteinander. Ziel ist es, nachvollziehbar darzustellen, wie die Trennung zwischen Winds als Host-/GUI-System und Linux als Arbeitsumgebung praktisch umgesetzt wird.
+Dieser Abschnitt beschreibt konkret die eingesetzten technischen Komponenten sowie deren Integration miteinander. Ziel ist es, nachvollziehbar darzustellen, wie die Trennung zwischen Windsows als Host-/GUI-System und Linux als Arbeitsumgebung praktisch umgesetzt wird.
 
 ### Virtualisierung
 
@@ -82,6 +85,7 @@ hinterlegt.
 tmux wird auf dem Linux-Server genutzt, um persistente Terminalsitzungen bereitzustellen.
 
 Vorteile:
+
 - SSH-Abbrüche beenden keine laufenden
 - Sitzungen können wieder verbunden werden
 - Mehrere Shells parallel in einer Session möglich
@@ -102,19 +106,21 @@ Git läuft vollständig auf dem Server, nicht auf dem Windows Host.
 - Dateien werden direkt auf dem Server bearbeitet
 - Terminal in VS Code ist die tmux Session des Ubuntu Servers
 
-
 ## Backup & Recovery
 
 Gesichert werden:
+
 - ~/projects
 - Relevante Benutzerkonfigurationen
 - ~/venv
 - Docker-Konfigurationen
 
 ### Backup-Skript
+
 ~/backup_vm.sh
 
 Eigenschaften:
+
 - Bash-Skript
 - Nicht interaktiv
 - Absolutpfade (wichtig für systemd)
@@ -122,12 +128,14 @@ Eigenschaften:
 tar für:
 archivierte Snapshots (zeitgestempelt)
 
-### Strategie:
+### Strategie
+
 - Tar-Archive
 - Aufbewahrung: 4 Wochen
 - Ziel: Externes Backup Ziel (Hostseitig)
 
 ### systemd Service
+
 Datei:
 ~/backup-vm.service
 type=oneshot
@@ -136,16 +144,25 @@ Kein Dauerprozess
 sichtbar mit systemctl status
 
 ### Systemd Timer
+
 Datei:
 ~/backup-vm.timer
+
 Funktion:
+
 - Zeitgesteuerter Start des Services
 - Entkoppelt Zeitlogik vom Skript
 Aktivierung:
-systemctl Daemon-reload
+
+```bash
+
+systemctl daemon-reload
 systemctl enable --now backup-vm.timer
 
+```
+
 ### Kontrollmechanismen
+
 - systemctl status backup-vm.service
 - systemctl list-timers
 
@@ -160,23 +177,35 @@ Dieses Bash-Skript überwacht das Root-Dateisystem '/' sowie die durchschnittlic
 
 ### Rohdaten
 
-**Physische Kerne zählen**
-Ermöglicht die dynamische Berechnung von WARN/CRIT für Fesplattenplatz  
-'''bash
+#### Physische Kerne zählen
+
+Ermöglicht die dynamische Berechnung von WARN/CRIT für Fesplattenplatz
+
+```bash
+
 CPU_CORES=$(grep -h . /sys/devices/system/cpu/cpu*/topology/core_id \  
      | cut -d: -f2 \  
      | sort -u \  
      | wc -l)  
-'''
-**Schwellenwerte berechnen**
 
-LOAD_WARN=$-
-awk "BEGIN {printf \"%.2f\", $CPU_CORES * 0.7}")
+```
+
+#### Schwellenwerte berechnen
+
+```bash
+
+LOAD_WARN=$(-awk "BEGIN {printf \"%.2f\", $CPU_CORES * 0.7}")
 LOAD_CRIT=$(awk "BEGIN {printf \"%.2f\", $CPU_CORES * 1.0}")
 
-**15-Minuten-Last auslesen**
+```
+
+#### 15 min. auslesen
+
+```bash
 
 LOAD_15=$(awk '{print $3}' /proc/loadavg)
+
+```
 
 ### Schwellenwerte / Status
 
@@ -185,17 +214,21 @@ Festplattenplatz: OK, WARN, CRIT
 Exit-Code 0,1,2
 
 ### Ausgabe
-'''text
+
+```text
+
 System Health Check
 ===================
 CPU Cores        : 2
 Load (15 min)    : 0.95 (WARN >= 1.40 | CRIT >= 2.00) => OK
 Disk Usage (/)   : 29% => OK
 Exit-Code: 0
-'''
+
+```
+
 ### Service & Timer
 
-Service: Type=oneshot 
+Service: Type=oneshot
 Start Skript einmal und beendet sich danach, dies ist notwendig da es sich um eine Momentaufnahme(Messung) handelt.  
 
 Timer: läuft in diesem Falle alle 15 Minuten (OnUnitActiveSec=15min) und ist persistent (Persistent=true)  
@@ -204,33 +237,39 @@ Timer: läuft in diesem Falle alle 15 Minuten (OnUnitActiveSec=15min) und ist pe
 
 Logging erfolgt über STDOUT/STDERR in systemd Journal
 
-Timer statt crontab: 
-Kein einfaches Tracking von Status/Exit-Codes
-Kein einfaches Logging direkt ins systemd journal
-Timer kann vergangene Startzeitpunkte tracken und verarbeiten, falls der Rechner zwischendurch offline war.
+#### Timer vs crontab
 
-**Prüfen von Exit Codes**
+- Kein einfaches Tracking von Status/Exit-Codes bei cron
+- Kein natives Logging direkt ins systemd journal
+- Systemd Timer können verpasste Läufe nachholen (Persistent)
+
+#### Prüfen von Exit Codes
+
 Logs: Journalctl -u monitor-system.service -n 20
 Exit-Code maschinell auswertbar:
 systemctl show monitor-system.service -p ExecMainStatus
 
-**Funktionstests**
+#### Funktionstests
+
 Skript ausführbar machen: chmod u+x monitor_system.sh  
 Systemd starten: sudo systemctl start monitor-system.service  
 Timer aktivieren: sudo systemctl enable --now monitor-system.timer
 Lasttest: stress-ng --cpu 2 --timeout 180  
-Diskspace-Test: fallocate -l 10G ~/disk_test_file   
+Diskspace-Test: fallocate -l 10G ~/disk_test_file
 echo $? -Zeigt nach manuellem Skriptlauf
 
 ## Bekannte Probleme & Lösungen
 
 ### VS Code Remote-SSH hing bei "Setting up SSH host"
+
 Ursache:
+
 - SSH-Agent auf Manuell gestellt, war bei jedem Start gestoppt
 - Verwendung eines shell-skript brechenden Nutzernamen: Beinhaltet ". " (Punkt und Leerzeichen)
 - Inkonsistente VS Code Installation
 
 Lösung:
+
 - Neuinstallation von VS Code unter "C:\"
 - Erzwungene Verwendung der ssh-config unter "C:\"
 - SH-Agent auf automatisch gestellt
@@ -238,7 +277,9 @@ Lösung:
 ### Ständiges Abfragen der SSH Passphrase bei git und VS Code Remote trotz Agent-Forwarding
 
 Ursache:
+
 - Auf der VM und in Github waren ein altes Schlüssel Paar hinterlegt
 
 Lösung:
+
 - Backup der VM-Schlüssel, dann Löschen. Host Schlüssel bei Github eingetragen.
