@@ -1,11 +1,10 @@
 [Unit]
-Description=Run system health check every 15 minutes
+Description=System Health Check (Disk + Load)
+After=network.target
 
-[Timer]
-OnBootSec=5min
-OnUnitActiveSec=15min
-AccuracySec=1min
-Persistent=true
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/monitor_system.sh
 
 [Install]
-WantedBy=timers.target
+WantedBy=multi-user.target
