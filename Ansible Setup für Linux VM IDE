@@ -1,7 +1,0 @@
-# Ansible Setup zur Replikation der Linux VM IDE
-
-## Ziel
-
-Ziel ist es, die selbstentwickelte Codeingumgebung auf einer Linux VM bequem und schnell reproduzierbar zu machen.
-
-## Ansible 
