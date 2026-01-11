@@ -1,8 +1,8 @@
 # Minimal Ansible Playbook for Developer VM Setup
 
-## Projektziel
+## Ziel
 
-Dieses Repository dokumentiert ein *+minimalistisches Ansible-Setup**, um eine Entwicklungs-VM mit Ubuntu Server automatisch vorzubereiten.  
+Dieses Sub-Repository dokumentiert ein *+minimalistisches Ansible-Setup**, um eine Entwicklungs-VM mit Ubuntu Server automatisch vorzubereiten.  
 
 Es demonstriert:
 
