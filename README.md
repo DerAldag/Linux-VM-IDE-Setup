@@ -2,13 +2,13 @@
 
 ## Kurzfassung
 
-Windows-Host mit Linux-VM für saubere, getrennte Entwicklunsarbeit.
+Windows-Host mit Linux-VM für isolierte Entwicklunsarbeit.
 Verwaltung per SSH & tmux, Entwicklung über VS Code Remote-SSH.
 Automatisierte Backups und systemd-basiertes Monitoring.
 
 ## Was dieses Projekt demonstriert
 
-Dieses Repository dokumentiert im Detail ein selbst entworfenes Entwicklungs-Setup, um erworbene Fähigkeiten praxisnah und nachvollziehbar darzustellen.
+Dieses Repository dokumentiert im Detail ein selbst entworfenes Entwicklungs-Setup unter Ubuntu-VM mit GUI im Windows Host.
 
 - Planung einer isolierten Entwicklungsumgebung
 - Sichere Remote-Verwaltung (SSH, tmux)
@@ -20,7 +20,7 @@ Dieses Repository dokumentiert im Detail ein selbst entworfenes Entwicklungs-Set
 
 ## Ziel des Setups
 
-Ziel des Setups ist es, eine stabile, bequem erreichbare Linux Arbeitsumgebung für Softwareentwicklung bereitzustellen, während Windows ausschließlich als GUI-Host verwendet wird. Dadurch können Coding-Tutorials und Entwicklungsworkflows einheitlich in einer Linux-Umgebung durchgeführt werden, ohne die gewohnte Windows-Oberfläche, Shortcuts oder Freizeitnutzung aufzugeben.
+Ziel des Setups ist es, eine stabile, bequem erreichbare Linux Arbeitsumgebung für Softwareentwicklung bereitzustellen, während Windows ausschließlich als GUI-Host verwendet wird. Dadurch können Coding-Tutorials und Entwicklungsworkflows einheitlich in einer Linux-Umgebung durchgeführt werden, ohne die gewohnte Windows-Oberfläche, Shortcuts oder Freizeitnutzung aufzugeben. 
 
 Aufgaben der Windows Maschine in diesem Setup
 
@@ -54,14 +54,14 @@ Aufgaben der Ubuntu Server VM:
 ### Warum Ubuntu in einer VM statt Dual Boot
 
 - Kein Neustart nötig,  Ubuntu Server ohne GUI startet sehr schnell
-- Interessantere Integrationsmöglichkeiten, wie Anbindung per SSH vom Windows Host
-- Technisch saubere Trennung von Arbeits- und Freizeitumgebung, aber nahtloser Übergang zwischen beidem
+- Technische Trennung von Arbeits- und Freizeitumgebung, aber nahtloser Übergang zwischen beidem
 
 ### Warum Ubuntu Server
 
 - Minimaler Ressourcenverbrauch für lagfreies Arbeiten
 - Größerer Lerneffekt durch Verzicht auf GUI, Arbeit am Terminal erzwungen
-- Keine GUI Abhängigkeit
+- Stabile Distro
+- Breiter Support
 
 ### Warum tmux?
 
