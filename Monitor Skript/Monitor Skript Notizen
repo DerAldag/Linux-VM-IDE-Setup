@@ -1,6 +1,6 @@
-# Konzept und Use-Case Überlegungen (WORK IN PROGRESS)
+# Konzept und Use-Case Überlegungen
 
-In diesem Dokument wird festgehalten, wie ich mir Schritt für Schritt ein möglichst robustes, weitgehend Distro-Unabhängiges Bash Skript zum Monitoring von Durchschnittslast und Diskbelegung von Grund auf erstelle. Copy-Paste Lösungen sollen vermieden werden, der Ausbau der eigenen Kompetenz ist dabei das Hauptziel, das Skript selbst und seine Funktion ist im Kontext des Heimservers eher "nice-to-have", als kritisch notwendig.
+In diesem Dokument wird festgehalten, wie ich mir Schritt für Schritt ein möglichst robustes, weitgehend Distro-Unabhängiges Bash Skript zum Monitoring von Durchschnittslast und Diskbelegung von Grund auf erstelle.
 
 Basiskonzept: Skript/Service für Automatisches Monitoring von Diskspace und Durchschnittslast, Warnung bei Überschreitungen, einfache logs
 
