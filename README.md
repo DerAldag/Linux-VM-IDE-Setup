@@ -6,6 +6,12 @@ Windows-Host mit Linux-VM für isolierte Entwicklunsarbeit.
 Verwaltung per SSH & tmux, Entwicklung über VS Code Remote-SSH.
 Automatisierte Backups und systemd-basiertes Monitoring.
 
+## Quickstart
+1. VM starten
+2. SSH-Key einrichten
+3. systemd-Services aktivieren
+4. VS Code Remote verbinden
+
 ## Was dieses Projekt demonstriert
 
 Dieses Repository dokumentiert im Detail ein selbst entworfenes Entwicklungs-Setup unter Ubuntu-VM mit GUI im Windows Host.
